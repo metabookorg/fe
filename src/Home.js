@@ -1,28 +1,48 @@
-import {useState} from "react"
+import {useState} from 'react'
 
-function Home() {
-    const [bookName, setBookName] = useState("book title")
+const Home = () => {
+    const [argument, setArgument] = useState('a trip')
+    const [environments, setEnvironment] = useState('london')
+    const [time, setTime] = useState('industrial revolution')
+    const [characters, setCharacters] = useState('sherlock holmes, mammeta')
+    const [book, setBook] = useState('read here')
+
     return (
-        <div className="Home">
-            <input placeholder={bookName} onChange={(e) => {
-                setBookName(e.target.value ? e.target.value : bookName)
+        <div className='Home'>
+            <input placeholder={argument} onChange={(e) => {
+                setArgument(e.target.value ? e.target.value : argument)
             }}/>
-            <button onClick={() => submit(bookName)}>submit</button>
+            <input placeholder={environments} onChange={(e) => {
+                setEnvironment(e.target.value ? e.target.value : environments)
+            }}/>
+            <input placeholder={time} onChange={(e) => {
+                setTime(e.target.value ? e.target.value : time)
+            }}/>
+            <input placeholder={characters} onChange={(e) => {
+                setCharacters(e.target.value ? e.target.value : characters)
+            }}/>
+            <button
+                onClick={() => submit(argument, environments, time, characters).then(res => setBook(res.toString()))}>submit
+            </button>
+            <br/>
+            <h3>{book}</h3>
         </div>
-    );
+    )
 }
 
-const submit = function submit(bookName) {
-    console.log(bookName)
-    fetch('http://192.168.123.72:1312/metabook', {
-        method: 'GET',
-        mode: 'no-cors',
-        headers: {
-            'Content-Type': 'text/html'
-        }
-    }).then(response => {
-        console.log(response)
+const submit = (argument, environments, time, characters) => {
+    characters = characters.split(',')
+    let body = {
+        argument: argument,
+        environments: environments,
+        time: time,
+        characters: characters
+    }
+    return fetch('http://localhost:1312/metabook', {
+        method: 'POST',
+        headers: {'content-type': 'application/json'},
+        body: JSON.stringify(body)
     })
 }
 
-export default Home;
+export default Home
