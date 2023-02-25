@@ -1,12 +1,11 @@
 import {useState} from 'react'
 
 const Home = () => {
+    const [book, setBook] = useState('read here')
     const [argument, setArgument] = useState('a trip')
     const [environments, setEnvironment] = useState('london')
     const [time, setTime] = useState('industrial revolution')
     const [characters, setCharacters] = useState('sherlock holmes, mammeta')
-    const [book, setBook] = useState('read here')
-
     return (
         <div className='Home'>
             <input placeholder={argument} onChange={(e) => {
@@ -22,7 +21,16 @@ const Home = () => {
                 setCharacters(e.target.value ? e.target.value : characters)
             }}/>
             <button
-                onClick={() => submit(argument, environments, time, characters).then(res => setBook(res.toString()))}>submit
+                onClick={() => submit(argument, environments, time, characters)
+                    .then(res => res.json().then(json => {
+                            let str = ''
+                            for (const page of json['data']) {
+                                str = str + page['idx'] + ' ' + page['txt'] + ' ' + page['url']
+                            }
+                            // should be a list or a slider
+                            setBook(str)
+                        })
+                    )}>submit
             </button>
             <br/>
             <h3>{book}</h3>
@@ -38,7 +46,7 @@ const submit = (argument, environments, time, characters) => {
         time: time,
         characters: characters
     }
-    return fetch('http://localhost:1312/metabook', {
+    return fetch('http://localhost:1312/metabook/new', {
         method: 'POST',
         headers: {'content-type': 'application/json'},
         body: JSON.stringify(body)
