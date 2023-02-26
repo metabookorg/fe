@@ -7,23 +7,26 @@ const Home = () => {
     const [time, setTime] = useState('industrial revolution')
     const [characters, setCharacters] = useState('sherlock holmes, mammeta')
     return (<div className='Home'>
-        <input placeholder={argument} onChange={(e) => {
+        <input placeholder='a trip' onChange={(e) => {
             setArgument(e.target.value ? e.target.value : argument)
         }}/>
-        <input placeholder={environments} onChange={(e) => {
+        <input placeholder='london' onChange={(e) => {
             setEnvironment(e.target.value ? e.target.value : environments)
         }}/>
-        <input placeholder={time} onChange={(e) => {
+        <input placeholder='industrial revolution' onChange={(e) => {
             setTime(e.target.value ? e.target.value : time)
         }}/>
-        <input placeholder={characters} onChange={(e) => {
+        <input placeholder='sherlock holmes, mammeta' onChange={(e) => {
             setCharacters(e.target.value ? e.target.value : characters)
         }}/>
         <button
-            onClick={() => submit(argument, environments, time, characters)
-                .then(res => res.json()
-                    .then(json => setBook(json['data']))
-                )}>submit
+            onClick={() => {
+                setBook([{txt: '... generating ...'}])
+                submit(argument, environments, time, characters)
+                    .then(res => res.json()
+                        .then(json => setBook(json['data']))
+                    )
+            }}>submit
         </button>
         <br/>
         <Book book={book}/>
