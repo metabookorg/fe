@@ -2,10 +2,10 @@ import {useState} from 'react'
 
 const Home = () => {
     const [book, setBook] = useState([{txt: 'read here'}])
-    const [argument, setArgument] = useState('a trip')
-    const [environments, setEnvironment] = useState('london')
-    const [time, setTime] = useState('industrial revolution')
-    const [characters, setCharacters] = useState('sherlock holmes, mammeta')
+    const [argument, setArgument] = useState('')
+    const [environments, setEnvironment] = useState('')
+    const [time, setTime] = useState('')
+    const [characters, setCharacters] = useState('')
     return (<div className='Home'>
         <input placeholder='a trip' onChange={(e) => {
             setArgument(e.target.value ? e.target.value : argument)
