@@ -31,20 +31,21 @@ const Home = () => {
 }
 
 const Book = (props) => {
-    let pages = []
-    for (let page of props.book) {
-        // tried to add key prop to list item but didn't work
-        pages.push(<Page txt={page['txt']} url={page['url']}/>)
-    }
+    const [pageNumber, setPageNumber] = useState(0)
     return (<div className='Book'>
-        <ul>{pages}</ul>
-    </div>)
-}
-
-const Page = (props) => {
-    return (<div className='Page'>
-        <h3>{props.txt}</h3>
-        <img src={props.url} alt=''/>
+        <div>
+            <h3>{props.book[pageNumber]['txt']}</h3>
+            <button
+                onClick={() => pageNumber > 0 ?
+                    setPageNumber(pageNumber - 1) : setPageNumber(pageNumber)}>&lt;
+            </button>
+            <img src={props.book[pageNumber]['url']} alt=''/>
+            {pageNumber}
+            <button
+                onClick={() => pageNumber < props.book.length - 1 ?
+                    setPageNumber(pageNumber + 1) : setPageNumber(pageNumber)}>&gt;
+            </button>
+        </div>
     </div>)
 }
 
