@@ -53,14 +53,17 @@ const Home = () => {
 const Book = (props) => {
     const [pageNumber, setPageNumber] = useState(0)
     return (<div className='Book'>
-        <Page idx={props.book[pageNumber]['idx']}
-              url={props.book[pageNumber]['url']}
-              txt={props.book[pageNumber]['txt']}
-              numberOfPages={props.book.length}/>
-        {props.book[pageNumber + 1] !== undefined && <Page idx={props.book[pageNumber + 1]['idx']}
-                                                           url={props.book[pageNumber + 1]['url']}
-                                                           txt={props.book[pageNumber + 1]['txt']}
-                                                           numberOfPages={props.book.length}/>}
+        {/*span not working*/}
+        <span>
+            <Page idx={props.book[pageNumber]['idx']}
+                  url={props.book[pageNumber]['url']}
+                  txt={props.book[pageNumber]['txt']}
+                  numberOfPages={props.book.length}/>
+            {props.book[pageNumber + 1] !== undefined && <Page idx={props.book[pageNumber + 1]['idx']}
+                                                               url={props.book[pageNumber + 1]['url']}
+                                                               txt={props.book[pageNumber + 1]['txt']}
+                                                               numberOfPages={props.book.length}/>}
+        </span>
         <button
             onClick={() => pageNumber > 1 ?
                 setPageNumber(pageNumber - 2) : setPageNumber(pageNumber)}>&lt;
