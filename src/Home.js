@@ -24,8 +24,7 @@ const Home = () => {
                 setBook([{txt: '... generating ...'}])
                 submit(argument, environments, time, characters)
                     .then(res => res.json()
-                        .then(json => setBook(json['data']))
-                    )
+                        .then(json => setBook(json['data'])))
             }}>submit
         </button>
         <br/>
