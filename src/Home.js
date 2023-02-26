@@ -1,4 +1,5 @@
 import {useState} from 'react'
+import {savePdf, submitWithParams, submitWithPrompt} from "./services";
 
 const Home = () => {
     const [book, setBook] = useState([{txt: 'read here'}])
@@ -14,10 +15,10 @@ const Home = () => {
         <button
             onClick={() => {
                 setBook([{txt: '... generating ...'}])
+                // setBook(stubbedRes)
                 submitWithPrompt(prompt)
                     .then(res => res.json()
                         .then(json => setBook(json['data'])))
-                // .then(json => setBook(stubbedRes)))
             }}>submit
         </button>
         <br/>
@@ -36,10 +37,10 @@ const Home = () => {
         <button
             onClick={() => {
                 setBook([{txt: '... generating ...'}])
+                // setBook(stubbedRes)
                 submitWithParams(argument, environments, time, characters)
                     .then(res => res.json()
                         .then(json => setBook(json['data'])))
-                // .then(json => setBook(stubbedRes)))
             }}>submit
         </button>
         <br/>
@@ -71,40 +72,6 @@ const Book = (props) => {
             </button>
         </div>
     </div>)
-}
-
-const submitWithParams = (argument, environments, time, characters) => {
-    characters = characters.split(',')
-    let body = {
-        argument: argument,
-        environments: environments,
-        time: time,
-        characters: characters
-    }
-    return fetch('http://localhost:1312/metabook/new/from_params', {
-        method: 'POST',
-        headers: {'content-type': 'application/json'},
-        body: JSON.stringify(body)
-    })
-}
-
-const submitWithPrompt = (prompt) => {
-    let body = {
-        prompt: prompt
-    }
-    return fetch('http://localhost:1312/metabook/new/from_prompt', {
-        method: 'POST',
-        headers: {'content-type': 'application/json'},
-        body: JSON.stringify(body)
-    })
-}
-
-const savePdf = (book) => {
-    return fetch('http://localhost:1312/metabook/pdf', {
-        method: 'POST',
-        headers: {'content-type': 'application/json'},
-        body: JSON.stringify(book)
-    })
 }
 
 export default Home
