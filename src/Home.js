@@ -6,7 +6,21 @@ const Home = () => {
     const [environments, setEnvironment] = useState('')
     const [time, setTime] = useState('')
     const [characters, setCharacters] = useState('')
+    const [prompt, setPrompt] = useState('')
     return (<div className='Home'>
+        <input placeholder='tell me a story about a dark night' onChange={(e) => {
+            setPrompt(e.target.value ? e.target.value : prompt)
+        }}/>
+        <button
+            onClick={() => {
+                setBook([{txt: '... generating ...'}])
+                submitWithPrompt(prompt)
+                    .then(res => res.json()
+                        .then(json => setBook(json['data'])))
+                // .then(json => setBook(stubbedRes)))
+            }}>submit
+        </button>
+        <br/>
         <input placeholder='a trip' onChange={(e) => {
             setArgument(e.target.value ? e.target.value : argument)
         }}/>
@@ -22,9 +36,10 @@ const Home = () => {
         <button
             onClick={() => {
                 setBook([{txt: '... generating ...'}])
-                submit(argument, environments, time, characters)
+                submitWithParams(argument, environments, time, characters)
                     .then(res => res.json()
                         .then(json => setBook(json['data'])))
+                // .then(json => setBook(stubbedRes)))
             }}>submit
         </button>
         <br/>
@@ -42,16 +57,23 @@ const Book = (props) => {
                     setPageNumber(pageNumber - 1) : setPageNumber(pageNumber)}>&lt;
             </button>
             <img src={props.book[pageNumber]['url']} alt=''/>
-            {pageNumber}
+            {pageNumber + 1}/{props.book.length}
             <button
                 onClick={() => pageNumber < props.book.length - 1 ?
                     setPageNumber(pageNumber + 1) : setPageNumber(pageNumber)}>&gt;
+            </button>
+            <br/>
+            <button
+                onClick={() => {
+                    savePdf(props.book)
+                        .then(res => console.log(res + 'should be a pdf to download'))
+                }}>save pdf
             </button>
         </div>
     </div>)
 }
 
-const submit = (argument, environments, time, characters) => {
+const submitWithParams = (argument, environments, time, characters) => {
     characters = characters.split(',')
     let body = {
         argument: argument,
@@ -59,11 +81,44 @@ const submit = (argument, environments, time, characters) => {
         time: time,
         characters: characters
     }
-    return fetch('http://localhost:1312/metabook/new', {
+    return fetch('http://localhost:1312/metabook/new/from_params', {
         method: 'POST',
         headers: {'content-type': 'application/json'},
         body: JSON.stringify(body)
     })
 }
 
+const submitWithPrompt = (prompt) => {
+    let body = {
+        prompt: prompt
+    }
+    return fetch('http://localhost:1312/metabook/new/from_prompt', {
+        method: 'POST',
+        headers: {'content-type': 'application/json'},
+        body: JSON.stringify(body)
+    })
+}
+
+const savePdf = (book) => {
+    return fetch('http://localhost:1312/metabook/pdf', {
+        method: 'POST',
+        headers: {'content-type': 'application/json'},
+        body: JSON.stringify(book)
+    })
+}
+
 export default Home
+
+const stubbedRes = [
+    {
+        txt: 'cat 1',
+        url: 'https://imgs.search.brave.com/Vfd9LLPXQcz6zyLUX4qoNltzJGN5yB2sakLr_JhFoUc/rs:fit:711:225:1/g:ce/aHR0cHM6Ly90c2Uz/Lm1tLmJpbmcubmV0/L3RoP2lkPU9JUC5N/TWlmUDRaNmhEWTBN/Q3JzYUtSUlBBSGFF/OCZwaWQ9QXBp'
+    },
+    {
+        txt: 'cat 2',
+        url: 'https://imgs.search.brave.com/aWKaQgY2nwt0L_4Ij01XjPq0IKdbXcfQKYrAyvlTlc8/rs:fit:713:225:1/g:ce/aHR0cHM6Ly90c2Uy/Lm1tLmJpbmcubmV0/L3RoP2lkPU9JUC5Z/QUdYZ1ZnY1VEWWNm/ak1MYXpaZmJnSGFF/NyZwaWQ9QXBp'
+    },
+    {
+        txt: 'cat 3',
+        url: 'https://imgs.search.brave.com/ZBb2YoiK2IPYnsexYY-LTCrtC4Wi7zVk7dCiOHL8zCY/rs:fit:532:225:1/g:ce/aHR0cHM6Ly90c2Ux/Lm1tLmJpbmcubmV0/L3RoP2lkPU9JUC4t/Q293QlRjeXR1NFhK/OGtNUXRQc0dnSGFH/bSZwaWQ9QXBp'
+    }]
