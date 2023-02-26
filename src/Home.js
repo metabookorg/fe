@@ -2,7 +2,7 @@ import {useState} from 'react'
 import {savePdf, submitWithParams, submitWithPrompt} from "./services";
 
 const Home = () => {
-    const [book, setBook] = useState([{txt: 'read here'}])
+    const [book, setBook] = useState([{txt: 'read here', url: ''}])
     const [argument, setArgument] = useState('')
     const [environments, setEnvironment] = useState('')
     const [time, setTime] = useState('')
@@ -14,7 +14,7 @@ const Home = () => {
         }}/>
         <button
             onClick={() => {
-                setBook([{txt: '... generating ...'}])
+                setBook([{txt: '... generating ...', url: ''}])
                 // setBook(stubbedRes)
                 submitWithPrompt(prompt)
                     .then(res => res.json()
@@ -36,7 +36,7 @@ const Home = () => {
         }}/>
         <button
             onClick={() => {
-                setBook([{txt: '... generating ...'}])
+                setBook([{txt: '... generating ...', url: ''}])
                 // setBook(stubbedRes)
                 submitWithParams(argument, environments, time, characters)
                     .then(res => res.json()
