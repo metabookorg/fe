@@ -1,7 +1,11 @@
-import {useState} from 'react'
-import {savePdf, submitWithParams, submitWithPrompt} from "./services";
+import {useEffect, useState} from 'react'
+import {getStyles, savePdf, submitWithParams, submitWithPrompt} from "./services";
 
 const Home = () => {
+    useEffect(() => {
+        getStyles().then(res => res.json().then(json => setStyles(json)))
+    })
+
     const [book, setBook] = useState([{txt: '_default_'}])
     const [bookPlaceholder, setBookPlaceholder] = useState('read here')
     const [argument, setArgument] = useState('')
