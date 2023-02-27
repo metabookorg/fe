@@ -12,6 +12,8 @@ const Home = () => {
     const [environments, setEnvironment] = useState('')
     const [time, setTime] = useState('')
     const [characters, setCharacters] = useState('')
+    const [styles, setStyles] = useState([])
+    const [style, setStyle] = useState('')
     const [prompt, setPrompt] = useState('')
     return (<div className='Home'>
         <input placeholder='tell me a story about a dark night' onChange={(e) => {
@@ -39,6 +41,7 @@ const Home = () => {
         <input placeholder='sherlock holmes, mammeta' onChange={(e) => {
             setCharacters(e.target.value ? e.target.value : characters)
         }}/>
+        {/*dropdown with styles options which sets style on change*/}
         <button
             onClick={() => {
                 setBookPlaceholder('...generating...')
