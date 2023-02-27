@@ -1,10 +1,13 @@
 export const submitWithParams = (argument, environments, time, characters) => {
     characters = characters.split(',')
     let body = {
-        argument: argument,
-        environments: environments,
-        time: time,
-        characters: characters
+        txt_request: {
+            argument: argument,
+            environments: environments,
+            time: time,
+            characters: characters
+        },
+        style: 'comic book' // should be taken from be service
     }
     return fetch('http://localhost:1312/metabook/new/from_params', {
         method: 'POST',
@@ -15,7 +18,10 @@ export const submitWithParams = (argument, environments, time, characters) => {
 
 export const submitWithPrompt = (prompt) => {
     let body = {
-        prompt: prompt
+        txt_request: {
+            prompt: prompt
+        },
+        style: 'comic book' // should be taken from be service
     }
     return fetch('http://localhost:1312/metabook/new/from_prompt', {
         method: 'POST',
@@ -25,7 +31,7 @@ export const submitWithPrompt = (prompt) => {
 }
 
 export const savePdf = (book) => {
-    return fetch('http://localhost:1312/metabook/pdf', {
+    return fetch('http://localhost:1312/metabook/export/pdf', {
         method: 'POST',
         headers: {'content-type': 'application/json'},
         body: JSON.stringify(book)
