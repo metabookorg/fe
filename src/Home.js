@@ -21,7 +21,7 @@ const Home = () => {
             onClick={() => {
                 setBookPlaceholder('...generating...')
                 setBook(stubbedRes)
-                submitWithPrompt(prompt)
+                submitWithPrompt(prompt, style)
                     .then(res => res.json()
                         .then(json => setBook(json['data'])))
             }}>submit
@@ -43,7 +43,7 @@ const Home = () => {
             onClick={() => {
                 setBookPlaceholder('...generating...')
                 setBook(stubbedRes)
-                submitWithParams(argument, environments, time, characters)
+                submitWithParams(argument, environments, time, characters, style)
                     .then(res => res.json()
                         .then(json => setBook(json['data'])))
             }}>submit
