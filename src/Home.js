@@ -49,7 +49,7 @@ const Home = () => {
         <button
             onClick={() => {
                 setBookPlaceholder('...generating...')
-                setBook(stubbedRes)
+                // setBook(stubbedRes)
                 submitWithParams(argument, environments, time, characters, style)
                     .then(res => res.json()
                         .then(json => setBook(json['data'])))
