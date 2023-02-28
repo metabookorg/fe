@@ -3,7 +3,7 @@ import {getStyles, savePdf, submitWithParams, submitWithPrompt} from "./services
 
 const Home = () => {
     useEffect(() => {
-        getStyles().then(res => res.json().then(json => setStyles(json)))
+        if(styles===[]) getStyles().then(res => res.json().then(json => setStyles(json)))
     })
 
     const [book, setBook] = useState([{txt: '_default_'}])
@@ -22,7 +22,7 @@ const Home = () => {
         <button
             onClick={() => {
                 setBookPlaceholder('...generating...')
-                setBook(stubbedRes)
+                // setBook(stubbedRes)
                 submitWithPrompt(prompt, style)
                     .then(res => res.json()
                         .then(json => setBook(json['data'])))
@@ -45,7 +45,7 @@ const Home = () => {
         <button
             onClick={() => {
                 setBookPlaceholder('...generating...')
-                setBook(stubbedRes)
+                // setBook(stubbedRes)
                 submitWithParams(argument, environments, time, characters, style)
                     .then(res => res.json()
                         .then(json => setBook(json['data'])))
