@@ -1,9 +1,13 @@
 import {useEffect, useState} from 'react'
-import {getStyles, savePdf, submitWithParams, submitWithPrompt} from "./services";
+import {getStyles, savePdf, submitWithParams, submitWithPrompt} from "./services"
+import './index.css'
 
 const Home = () => {
     useEffect(() => {
-        if (styles === []) getStyles().then(res => res.json().then(json => setStyles(json)))
+        if (styles === []) {
+            getStyles().then(res => res.json()
+                .then(json => setStyles(json)))
+        }
     })
 
     const [book, setBook] = useState([{txt: '_default_'}])
@@ -15,7 +19,7 @@ const Home = () => {
     const [styles, setStyles] = useState([])
     const [style, setStyle] = useState('')
     const [prompt, setPrompt] = useState('')
-    return (<div className='Home'>
+    return (<div>
         <input placeholder='tell me a story about a dark night' onChange={(e) => {
             setPrompt(e.target.value ? e.target.value : prompt)
         }}/>
@@ -45,7 +49,7 @@ const Home = () => {
         <button
             onClick={() => {
                 setBookPlaceholder('...generating...')
-                // setBook(stubbedRes)
+                setBook(stubbedRes)
                 submitWithParams(argument, environments, time, characters, style)
                     .then(res => res.json()
                         .then(json => setBook(json['data'])))
@@ -54,14 +58,20 @@ const Home = () => {
         <br/>
         {book[0].txt !== '_default_' && <Book book={book}/>}
         {book[0].txt === '_default_' && bookPlaceholder}
+        <br/>
+        <button
+            onClick={() => {
+                savePdf(book)
+                    .then(res => console.log(res + 'should be a pdf to download'))
+            }}>save pdf
+        </button>
     </div>)
 }
 
 const Book = (props) => {
     const [pageNumber, setPageNumber] = useState(0)
-    return (<div className='Book'>
-        {/*span not working*/}
-        <span>
+    return (<div>
+        <span className='Pages'>
             <Page idx={props.book[pageNumber]['idx']}
                   url={props.book[pageNumber]['url']}
                   txt={props.book[pageNumber]['txt']}
@@ -71,33 +81,28 @@ const Book = (props) => {
                                                                txt={props.book[pageNumber + 1]['txt']}
                                                                numberOfPages={props.book.length}/>}
         </span>
-        <button
-            onClick={() => pageNumber > 1 ?
-                setPageNumber(pageNumber - 2) : setPageNumber(pageNumber)}>&lt;
-        </button>
-        <button
-            onClick={() => pageNumber < props.book.length - 2 ?
-                setPageNumber(pageNumber + 2) : setPageNumber(pageNumber)}>&gt;
-        </button>
-        <br/>
-        <button
-            onClick={() => {
-                savePdf(props.book)
-                    .then(res => console.log(res + 'should be a pdf to download'))
-            }}>save pdf
-        </button>
+        <span className='Browser'>
+            <button
+                onClick={() => pageNumber > 1 ?
+                    setPageNumber(pageNumber - 2) : setPageNumber(pageNumber)}>&lt;
+            </button>
+            <button
+                onClick={() => pageNumber < props.book.length - 2 ?
+                    setPageNumber(pageNumber + 2) : setPageNumber(pageNumber)}>&gt;
+            </button>
+        </span>
     </div>)
 }
 
 const Page = (props) => {
     if (props.idx % 2 !== 1) {
-        return (<div className='Page'>
+        return (<div>
             <h3>{props.txt}</h3>
             {props.idx + 1}/{props.numberOfPages}
             <img src={props.url} alt=''/>
         </div>)
     } else {
-        return (<div className='Page'>
+        return (<div>
             <h3>{props.txt}</h3>
             <img src={props.url} alt=''/>
             {props.idx + 1}/{props.numberOfPages}
@@ -107,6 +112,7 @@ const Page = (props) => {
 
 export default Home
 
+const stubbedStyles = ['comic', 'black and white']
 const stubbedRes = [
     {
         txt: 'cat 1',
