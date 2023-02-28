@@ -3,7 +3,7 @@ import {getStyles, savePdf, submitWithParams, submitWithPrompt} from "./services
 
 const Home = () => {
     useEffect(() => {
-        if(styles===[]) getStyles().then(res => res.json().then(json => setStyles(json)))
+        if (styles === []) getStyles().then(res => res.json().then(json => setStyles(json)))
     })
 
     const [book, setBook] = useState([{txt: '_default_'}])
