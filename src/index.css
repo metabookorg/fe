@@ -3,11 +3,6 @@
     justify-content: center;
 }
 
-.Page {
-    width: 10%;
-    margin: 10px;
-}
-
 .Browser {
     display: flex;
     justify-content: center;
