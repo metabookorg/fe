@@ -1,9 +1,7 @@
-book title
-
-generate from prompt string
+book title first page
 
 save pdf
 
 styles
 
-paging
+remove css file and hardcode style in html until we find a naming strategy
