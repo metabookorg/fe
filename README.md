@@ -2,8 +2,5 @@
 
 npm run start
 
-// docker coming soon
-
-# dev - mobile application
-
-http://reactnative.dev/docs/
+docker build -t mfe . \
+docker run -p 3000:3000 mfe
