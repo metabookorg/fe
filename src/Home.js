@@ -101,7 +101,7 @@ const Book = (props) => {
 
 const Page = (props) => {
     if (props.idx % 2 !== 1) {
-        return (<div>
+        return (<div style={{padding: 10}}>
             <h3 style={{width: 400, height: 50}}>{props.txt}</h3>
             <div className='Pages'>
                 <img src={props.url} alt=''/>
@@ -110,7 +110,7 @@ const Page = (props) => {
             {props.idx + 1}/{props.numberOfPages}
         </div>)
     } else {
-        return (<div>
+        return (<div style={{padding: 10}}>
             <h3 style={{width: 400, height: 50}}>{props.txt}</h3>
             <div className='Pages'>
                 <img src={props.url} alt=''/>
