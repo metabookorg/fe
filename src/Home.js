@@ -77,14 +77,19 @@ const Book = (props) => {
     const [pageNumber, setPageNumber] = useState(0)
     return (<div>
         <span className='Pages'>
-            <Page idx={props.book[pageNumber]['idx']}
-                  url={props.book[pageNumber]['url']}
-                  txt={props.book[pageNumber]['txt']}
-                  numberOfPages={props.book.length}/>
-            {props.book[pageNumber + 1] !== undefined && <Page idx={props.book[pageNumber + 1]['idx']}
-                                                               url={props.book[pageNumber + 1]['url']}
-                                                               txt={props.book[pageNumber + 1]['txt']}
-                                                               numberOfPages={props.book.length}/>}
+            {pageNumber === 0 && <Page idx={props.book[pageNumber]['idx']}
+                                       url={props.book[pageNumber]['url']}
+                                       txt={props.book[pageNumber]['txt']}
+                                       numberOfPages={props.book.length}/>}
+            {pageNumber !== 0 && <Page idx={props.book[pageNumber - 1]['idx']}
+                                       url={props.book[pageNumber - 1]['url']}
+                                       txt={props.book[pageNumber - 1]['txt']}
+                                       numberOfPages={props.book.length}/>}
+            {pageNumber !== 0 && props.book[pageNumber] !== undefined &&
+                <Page idx={props.book[pageNumber]['idx']}
+                      url={props.book[pageNumber]['url']}
+                      txt={props.book[pageNumber]['txt']}
+                      numberOfPages={props.book.length}/>}
         </span>
         <span className='Browser'>
             <button
@@ -92,7 +97,7 @@ const Book = (props) => {
                     setPageNumber(pageNumber - 2) : setPageNumber(pageNumber)}>&lt;
             </button>
             <button
-                onClick={() => pageNumber < props.book.length - 2 ?
+                onClick={() => pageNumber < props.book.length - 1 ?
                     setPageNumber(pageNumber + 2) : setPageNumber(pageNumber)}>&gt;
             </button>
         </span>
@@ -100,7 +105,7 @@ const Book = (props) => {
 }
 
 const Page = (props) => {
-    if (props.idx % 2 !== 1) {
+    if (props.idx % 2 !== 0) {
         return (<div style={{padding: 10}}>
             <div style={{textAlign: "center"}}>
                 <h3 style={{width: 400, height: 50}}>{props.txt}</h3>
