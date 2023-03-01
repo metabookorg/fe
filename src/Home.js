@@ -107,7 +107,7 @@ const Book = (props) => {
 const Page = (props) => {
     if (props.idx % 2 !== 0) {
         return (<div style={{padding: 10}}>
-            <div style={{textAlign: "center"}}>
+            <div style={{textAlign: 'center'}}>
                 <h3 style={{width: 400, height: 50}}>{props.txt}</h3>
             </div>
             <div className='Pages'>
@@ -118,13 +118,13 @@ const Page = (props) => {
         </div>)
     } else {
         return (<div style={{padding: 10}}>
-            <div style={{textAlign: "center"}}>
+            <div style={{textAlign: 'center'}}>
                 <h3 style={{width: 400, height: 50}}>{props.txt}</h3>
             </div>
             <div className='Pages'>
                 <img src={props.url} alt=''/>
             </div>
-            <div style={{textAlign: "right"}}>
+            <div style={{textAlign: 'right'}}>
                 {props.idx + 1}/{props.numberOfPages}
             </div>
         </div>)
@@ -133,14 +133,14 @@ const Page = (props) => {
 
 export default Home
 
-const stubbedStyles = ["vaporwave", "post apocaliptic", "gothic", "fantasy", "sci-fi", "cyber", "cybernetic",
-    "cyberpunk", "biopunk", "steampunk", "dieselpunk", "afrofuturism", "memphis", "stencil", "pencil drawing",
-    "pencil sketch", "ballpoint pen art", "political cartoon from U.S. newspaper", "charcoal sketch", "woodcut",
-    "coloring-in sheet", "etching", "crayon", "child's drawing", "acrylic on canvas", "water color", "coloured pencil",
-    "coloured pencil, detailed", "oil painting", "airbrush", "pastels", "ukiyo-e", "chinese watercolor", "alegria",
-    "collage", "vector art", "watercolor & pen", "screen printing", "low poply", "layered paper", "story book",
-    "digital painting", "sticker illustration", "comic book", "Anime", "Pixar", "vintage Disney", "Disney 1990s",
-    " cel shading", "Studio Ghibli", "Hanna Barbera, 1990s", "pixel art", "1970s grainy vintage illustration"]
+const stubbedStyles = ['vaporwave', 'post apocaliptic', 'gothic', 'fantasy', 'sci-fi', 'cyber', 'cybernetic',
+    'cyberpunk', 'biopunk', 'steampunk', 'dieselpunk', 'afrofuturism', 'memphis', 'stencil', 'pencil drawing',
+    'pencil sketch', 'ballpoint pen art', 'political cartoon from U.S. newspaper', 'charcoal sketch', 'woodcut',
+    'coloring-in sheet', 'etching', 'crayon', 'child\'s drawing', 'acrylic on canvas', 'water color', 'coloured pencil',
+    'coloured pencil, detailed', 'oil painting', 'airbrush', 'pastels', 'ukiyo-e', 'chinese watercolor', 'alegria',
+    'collage', 'vector art', 'watercolor & pen', 'screen printing', 'low poply', 'layered paper', 'story book',
+    'digital painting', 'sticker illustration', 'comic book', 'Anime', 'Pixar', 'vintage Disney', 'Disney 1990s',
+    ' cel shading', 'Studio Ghibli', 'Hanna Barbera, 1990s', 'pixel art', '1970s grainy vintage illustration']
 const stubbedRes = [
     {
         'txt': 'The knight and the princess',
