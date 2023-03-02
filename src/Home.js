@@ -76,7 +76,7 @@ const Home = () => {
                         .then(blob => {
                             let link = document.createElement('a')
                             link.href = window.URL.createObjectURL(new Blob([blob], {type: 'application/pdf'}))
-                            link.download = book[0].txt + '.pdf'
+                            // link.download = book[0].txt + '.pdf'
                             link.click()
                         }))
             }}>save pdf
