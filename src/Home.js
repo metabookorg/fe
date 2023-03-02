@@ -5,24 +5,26 @@ import './index.css'
 const Home = () => {
     useEffect(() => {
         if (first) {
-            setStyles(stubbedStyles)
-            getStyles().then(res => res.json()
-                .then(json => {
-                    setStyles(json)
+            getStyles().then((res) => res.json()
+                .then((json) => {
                     isFirst(false)
+                    for (let i = 0; i < json.length; i++) {
+                        stylesOptions[i] = <option key={i}>{json[i]}</option>
+                    }
                 }))
         }
     })
+    let [stylesOptions, setStylesOptions] = useState([])
     const [first, isFirst] = useState(true)
-    const [book, setBook] = useState([{txt: '_default_'}])
+    const [book, setBook] = useState([{txt: '_default_', idx: -1, url: ''}])
     const [bookPlaceholder, setBookPlaceholder] = useState('read here')
     const [argument, setArgument] = useState('')
     const [environments, setEnvironment] = useState('')
     const [time, setTime] = useState('')
     const [characters, setCharacters] = useState('')
-    const [styles, setStyles] = useState([])
     const [style, setStyle] = useState('')
     const [prompt, setPrompt] = useState('')
+    const [pdf, setPdf] = useState('')
     return (<div>
         <input placeholder='tell me a story about a dark night' onChange={(e) => {
             setPrompt(e.target.value ? e.target.value : prompt)
@@ -30,13 +32,12 @@ const Home = () => {
         <button
             onClick={() => {
                 setBookPlaceholder('...generating...')
-                setBook(stubbedRes)
+                // setBook(stubbedRes)
                 submitWithPrompt(prompt, style)
-                    .then(res => res.json()
-                        .then(json => setBook(json['data'])))
+                    .then((res) => res.json()
+                        .then((json) => setBook(json['data'])))
             }}>submit
         </button>
-        {styles}
         <br/>
         <input placeholder='a trip' onChange={(e) => {
             setArgument(e.target.value ? e.target.value : argument)
@@ -50,14 +51,19 @@ const Home = () => {
         <input placeholder='sherlock holmes, mammeta' onChange={(e) => {
             setCharacters(e.target.value ? e.target.value : characters)
         }}/>
-        {/*dropdown with styles options which sets style on change*/}
+        <select onChange={(e) => {
+            setStyle(e.target.value)
+        }}>
+            <option/>
+            {stylesOptions}
+        </select>
         <button
             onClick={() => {
                 setBookPlaceholder('...generating...')
-                setBook(stubbedRes)
+                // setBook(stubbedRes)
                 submitWithParams(argument, environments, time, characters, style)
-                    .then(res => res.json()
-                        .then(json => setBook(json['data'])))
+                    .then((res) => res.json()
+                        .then((json) => setBook(json['data'])))
             }}>submit
         </button>
         <br/>
@@ -67,7 +73,8 @@ const Home = () => {
         <button
             onClick={() => {
                 savePdf(book)
-                    .then(res => console.log(res + 'should be a pdf to download'))
+                    .then((res) => res.json()
+                        .then((json) => setPdf(json)))
             }}>save pdf
         </button>
     </div>)
