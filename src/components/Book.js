@@ -1,4 +1,4 @@
-import {useState} from "@types/react";
+import {useState} from 'react'
 import Page from "./Page";
 
 const Book = (props) => {
