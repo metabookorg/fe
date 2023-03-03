@@ -1,6 +1,7 @@
 import {useEffect, useState} from 'react'
 import {getStyles, savePdf, submitWithParams, submitWithPrompt} from './services'
 import './index.css'
+import Book from "./components/Book"
 
 const Home = () => {
     useEffect(() => {
@@ -26,7 +27,7 @@ const Home = () => {
     const [style, setStyle] = useState('')
     const [prompt, setPrompt] = useState('')
     return (<div>
-        <input placeholder='tell me a story about a dark night' onChange={(e) => {
+        <input style={{width: 200}} placeholder='tell me a story about a dark night' onChange={(e) => {
             setPrompt(e.target.value ? e.target.value : prompt)
         }}/>
         <button
@@ -42,19 +43,22 @@ const Home = () => {
         <input placeholder='a trip' onChange={e => {
             setArgument(e.target.value ? e.target.value : argument)
         }}/>
+        <br/>
         <input placeholder='london' onChange={e => {
             setEnvironment(e.target.value ? e.target.value : environments)
         }}/>
+        <br/>
         <input placeholder='industrial revolution' onChange={e => {
             setTime(e.target.value ? e.target.value : time)
         }}/>
+        <br/>
         <input placeholder='sherlock holmes, mammeta' onChange={e => {
             setCharacters(e.target.value ? e.target.value : characters)
         }}/>
+        <br/>
         <select onChange={e => {
             setStyle(e.target.value)
-        }}>
-            {stylesOptions}
+        }}>{stylesOptions}
         </select>
         <button
             onClick={() => {
@@ -82,64 +86,6 @@ const Home = () => {
             }}>save pdf
         </button>
     </div>)
-}
-
-const Book = (props) => {
-    const [pageNumber, setPageNumber] = useState(0)
-    return (<div>
-        <span className='Pages'>
-            {pageNumber === 0 && <Page idx={props.book[pageNumber]['idx']}
-                                       url={props.book[pageNumber]['url']}
-                                       txt={props.book[pageNumber]['txt']}
-                                       numberOfPages={props.book.length}/>}
-            {pageNumber !== 0 && <Page idx={props.book[pageNumber - 1]['idx']}
-                                       url={props.book[pageNumber - 1]['url']}
-                                       txt={props.book[pageNumber - 1]['txt']}
-                                       numberOfPages={props.book.length}/>}
-            {pageNumber !== 0 && props.book[pageNumber] !== undefined &&
-                <Page idx={props.book[pageNumber]['idx']}
-                      url={props.book[pageNumber]['url']}
-                      txt={props.book[pageNumber]['txt']}
-                      numberOfPages={props.book.length}/>}
-        </span>
-        <span className='Browser'>
-            <button
-                onClick={() => pageNumber > 1 ?
-                    setPageNumber(pageNumber - 2) : setPageNumber(pageNumber)}>&lt;
-            </button>
-            <button
-                onClick={() => pageNumber < props.book.length - 1 ?
-                    setPageNumber(pageNumber + 2) : setPageNumber(pageNumber)}>&gt;
-            </button>
-        </span>
-    </div>)
-}
-
-const Page = (props) => {
-    if (props.idx % 2 !== 0) {
-        return (<div style={{padding: 10}}>
-            <div style={{textAlign: 'center'}}>
-                <h3 style={{width: 400, height: 50}}>{props.txt}</h3>
-            </div>
-            <div className='Pages'>
-                <img src={props.url} alt=''/>
-            </div>
-            <br/>
-            {props.idx + 1}/{props.numberOfPages}
-        </div>)
-    } else {
-        return (<div style={{padding: 10}}>
-            <div style={{textAlign: 'center'}}>
-                <h3 style={{width: 400, height: 50}}>{props.txt}</h3>
-            </div>
-            <div className='Pages'>
-                <img src={props.url} alt=''/>
-            </div>
-            <div style={{textAlign: 'right'}}>
-                {props.idx + 1}/{props.numberOfPages}
-            </div>
-        </div>)
-    }
 }
 
 export default Home
