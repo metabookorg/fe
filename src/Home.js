@@ -1,7 +1,7 @@
 import {useEffect, useState} from 'react'
 import {getStyles, savePdf, submitWithParams, submitWithPrompt} from './services'
 import './index.css'
-import Book from "./components/Book"
+import Book from './components/Book'
 
 const Home = () => {
     useEffect(() => {

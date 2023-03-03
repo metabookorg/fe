@@ -1,5 +1,5 @@
 import {useState} from 'react'
-import Page from "./Page";
+import Page from './Page'
 
 const Book = (props) => {
     const [pageNumber, setPageNumber] = useState(0)
